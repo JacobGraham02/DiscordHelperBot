@@ -2,7 +2,15 @@ import discord
 import os
 from dotenv import load_dotenv
 
+from database.MongoDbDatabaseManager import MongoDbDatabaseManager
+
 load_dotenv()
+
+mongodb_database_manager = MongoDbDatabaseManager(os.getenv('MONGODB_CONNECTION_STRING'))
+mongodb_database_manager.connect_to_database()
+mongodb_database_manager.get_database_instance()
+mongodb_database_manager.get_collection_instance()
+mongodb_database_manager.get_documents_from_collection()
 
 client = discord.Client()
 
@@ -18,4 +26,4 @@ async def on_message(message):
     if message.content.startswith('$hello'):
         await message.channel.send('Hello!')
         
-client.run(os.getenv('TOKEN'))
+client.run(os.getenv('DISCORD_BOT_TOKEN'))
