@@ -49,3 +49,14 @@ Product.objects.all()
 
 <class_name_for_model>.objects.create(arg1='', arg2='', ... , argN='')
 Product.objects.create(title='new test 2', description='new test 2', price='new test 2', summary='sweet')
+
+
+
+
+DISCORD.py commands:
+
+Bot token: NzQxMjkwMDY1MjA4Mjc5MTMw.Xy1aLA.9RYO4OT-1IKqhkt3liMinMxGWj8
+
+Before doing anything, create a virtual environment for your project. This keeps you from messing up any globally installed packages on your machine, and encourages
+organisation and maintenance. If you are on Windows, the below command makes a Python virtual environment at the currently opened folder.
+py -m venv .
