@@ -3,10 +3,11 @@ from json import load
 from dotenv import load_dotenv
 from pymongo import MongoClient
 import pymongo 
+import pprint
 
 load_dotenv
 
-class MongoDbDatabaseManager:
+class MongoDbDatabaseReader:
     
     def __init__(self, database_connection_string, database_name = 'DiscordBot', collection_name = 'Work'):
         self.database_connection_string = database_connection_string
@@ -42,13 +43,18 @@ class MongoDbDatabaseManager:
         
     def get_collection_instance(self):
         self.collection = self.database[f'{self.collection_name}']
+        self.posts = self.collection
         
-        # pymongo creates a cursor for looping over each document in a collection
     def get_documents_from_collection(self):
+        listOfDatabaseDocuments = []
         for document in self.collection.find():
-            print(document)
-    
-    
-        
+            listOfDatabaseDocuments.append(document)
+        return listOfDatabaseDocuments
+            
+    def insert_document_into_collection(self):
+        test_post = {"author": "Jack",
+                     "text": "Test text",
+                     "tags": ["MongoDb", "Python", "PyMongo"]}
+        self.posts.insert_one(test_post)
     
     

@@ -58,3 +58,9 @@ DISCORD.py commands:
 Before doing anything, create a virtual environment for your project. This keeps you from messing up any globally installed packages on your machine, and encourages
 organisation and maintenance. If you are on Windows, the below command makes a Python virtual environment at the currently opened folder.
 py -m venv .
+
+
+Installing Kivy for use 
+
+python -m pip install "kivy[base]"
+
