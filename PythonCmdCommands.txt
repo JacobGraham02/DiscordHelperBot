@@ -63,4 +63,3 @@ py -m venv .
 Installing Kivy for use 
 
 python -m pip install "kivy[base]"
-

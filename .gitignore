@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+# Custom python files
+KivyGameExample.kv
+KivyGameExample.py
+
 # Distribution / packaging
 .Python
 build/

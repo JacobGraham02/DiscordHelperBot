@@ -1,9 +1,7 @@
-from gc import collect
-from json import load
 from dotenv import load_dotenv
 from pymongo import MongoClient
-import pymongo 
-import pprint
+import pymongo
+from datetime import datetime
 
 load_dotenv
 
@@ -45,16 +43,33 @@ class MongoDbDatabaseReader:
         self.collection = self.database[f'{self.collection_name}']
         self.posts = self.collection
         
-    def get_documents_from_collection(self):
+    def get_dictionary_of_documents_from_collection(self):
+        dictOfDatabaseDocuments = {}
         listOfDatabaseDocuments = []
-        for document in self.collection.find():
+        cursorOfDatabaseObjects = self.collection.find()
+        
+        for document in cursorOfDatabaseObjects:
             listOfDatabaseDocuments.append(document)
-        return listOfDatabaseDocuments
+            
+        i = 0
+        for document in listOfDatabaseDocuments:
+            dictOfDatabaseDocuments[document['course_code']] = listOfDatabaseDocuments[i]
+            i+=1
+            
+        print(dictOfDatabaseDocuments)
+        return dictOfDatabaseDocuments
             
     def insert_document_into_collection(self):
-        test_post = {"author": "Jack",
-                     "text": "Test text",
-                     "tags": ["MongoDb", "Python", "PyMongo"]}
+        test_post = {"course_code": "Test course code 2006",
+                     "course_work_name": "Test course work name",
+                     "course_work_due_date": "Test course work due date",
+                     "course_work_input_date": datetime.today().strftime('%Y-%m-%d'),
+                     "course_work_extra_information": "Test course work extra information"}
         self.posts.insert_one(test_post)
     
+    def get_documents_from_collection_by_code(self):
+        listOfDatabaseDocuments = []
+        for document in self.collection.find({"author":"Mike"}):
+            listOfDatabaseDocuments.append(document)
+        return listOfDatabaseDocuments
     
