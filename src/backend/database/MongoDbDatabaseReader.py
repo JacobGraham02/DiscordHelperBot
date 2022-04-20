@@ -12,26 +12,6 @@ class MongoDbDatabaseReader:
         self.database_name = database_name
         self.collection_name = collection_name
         
-    # @database_type.setter
-    # def database_type(self, value):
-    #     if self.database_type == value:
-    #         self.database_type = value
-            
-    # @property
-    # def database_type(self):
-    #     return self.database_type
-    
-    # def connect_to_database(self):
-    #     self.client = MongoClient(self.database_connection_string)
-    #     self.databaseConfig = self.client.config
-        
-    # def get_database_names(self):
-    #     return self.client.list_database_names()
-        
-    # def get_collection_data(self):
-    #     self.collection_instance = self.client[self.collection_name]
-        
-    #     cursor = self.collection_instance.find({})
     def connect_to_database(self):
         self.client = MongoClient(self.database_connection_string)
         self.database_config = self.client.config
@@ -51,12 +31,10 @@ class MongoDbDatabaseReader:
         for document in cursorOfDatabaseObjects:
             listOfDatabaseDocuments.append(document)
             
-        i = 0
+        dictionaryOfDatabaseDocumentsCounter = 0
         for document in listOfDatabaseDocuments:
-            dictOfDatabaseDocuments[document['course_code']] = listOfDatabaseDocuments[i]
-            i+=1
-            
-        print(dictOfDatabaseDocuments)
+            dictOfDatabaseDocuments[document['course_code']] = listOfDatabaseDocuments[dictionaryOfDatabaseDocumentsCounter]
+            dictionaryOfDatabaseDocumentsCounter+=1
         return dictOfDatabaseDocuments
             
     def insert_document_into_collection(self):
