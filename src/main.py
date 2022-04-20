@@ -5,12 +5,13 @@ from pprint import pprint
 from dotenv import load_dotenv
 from discord.ext import commands
 
-from backend.classes import CommandManager
+from backend.classes.CommandManager import CommandManager 
 from backend.database.MongoDbDatabaseReader import MongoDbDatabaseReader
 
 bot = commands.Bot(command_prefix='/')
 
 def main():
+    dictionaryOfDatabaseDocuments = {}
     load_dotenv()
     
     MONGODB_CONNECTION_STRING = os.getenv('MONGODB_CONNECTION_STRING')
@@ -22,6 +23,11 @@ def main():
     mongodb_database_reader.connect_to_database()
     mongodb_database_reader.get_database_instance()
     mongodb_database_reader.get_collection_instance()
+    
+    dictionaryOfDatabaseDocuments = mongodb_database_reader.get_dictionary_of_documents_from_collection()
+    
+    command_manager = CommandManager(dictionaryOfDatabaseDocuments)
+    dictionaryOfDatabaseDocuments = command_manager.discord_commands
     # mongodb_database_reader.insert_document_into_collection()
 
     @bot.event
@@ -37,6 +43,7 @@ def main():
     async def schoolwork(ctx):
         dictionaryOfDatabaseDocuments = mongodb_database_reader.get_dictionary_of_documents_from_collection()
         await ctx.send(dictionaryOfDatabaseDocuments)
+        
             
     bot.run(DISCORD_TOKEN)
 
